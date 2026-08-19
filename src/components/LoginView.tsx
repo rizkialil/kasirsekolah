@@ -60,7 +60,9 @@ export default function LoginView({ onLoginSuccess, config, isDark }: LoginViewP
                   <img
                     src="/logoweb.png"
                     alt="Logo"
-                    className="size-8 object-contain"
+                    width={40}
+                    height={40}
+                    className="object-contain w-full h-full"
                     priority
                   />
                 </div>
