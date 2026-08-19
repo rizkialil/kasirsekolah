@@ -48,7 +48,7 @@ export default function LoginView({ onLoginSuccess, config, isDark }: LoginViewP
         }`}>
           
           {/* Left Side: Dynamic Welcome Banner (Blue/Indigo Gradient matching Dashboard) */}
-          <div className="w-full md:w-1/2 p-8 sm:p-12 flex flex-col justify-center bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 text-white min-h-[380px] md:min-h-[520px] relative overflow-hidden">
+          <div className="w-full md:w-1/2 p-8 sm:p-12 flex flex-col justify-center bg-gradient-to-br from-green-600 via-green-700 to-indigo-800 text-white min-h-[380px] md:min-h-[520px] relative overflow-hidden">
             {/* Soft Ambient Vector Art Overlays */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-2xl -mr-20 -mt-20 pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-48 h-48 bg-black/5 rounded-full blur-xl -ml-16 -mb-16 pointer-events-none" />
