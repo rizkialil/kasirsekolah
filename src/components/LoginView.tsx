@@ -70,7 +70,7 @@ export default function LoginView({ onLoginSuccess, config, isDark }: LoginViewP
               </div>
               
               {/* Headings */}
-              <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight">
+              <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight mb-4">
                 Selamat Datang di
               </h2>
 
