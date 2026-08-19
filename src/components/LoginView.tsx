@@ -54,29 +54,34 @@ export default function LoginView({ onLoginSuccess, config, isDark }: LoginViewP
             <div className="absolute bottom-0 left-0 w-48 h-48 bg-black/5 rounded-full blur-xl -ml-16 -mb-16 pointer-events-none" />
 
             <div className="relative z-10">
-              {/* Logo & Nama Sekolah sejajar */}
-              <div className="flex items-center gap-3 mb-8 sm:mb-12">
+              {/* Logo & Nama Sekolah Tengah Atas */}
+              <div className="flex justify-center items-center gap-3.5 mb-8 sm:mb-12">
                 {/* Container Logo/Icon */}
                 <div className="inline-flex p-3 bg-white/10 border border-white/10 rounded-full w-fit shadow-inner shrink-0">
                   {/* Gambar Logo Sekolah */}
                   <img
                     src="/logoweb.png"
                     alt="Logo Sekolah"
-                    className="size-6 object-contain"
+                    className="size-10 sm:size-12 object-contain"
                   />
                 </div>
-                {/* Teks Nama Sekolah (Ukuran Seimbang) */}
-                <span className="text-sm sm:text-base font-bold text-white tracking-wide uppercase leading-snug">
-                  {config.namaSekolah || "MTS ROUDHOTUL ULUM"}
-                </span>
+                {/* Teks Nama Sekolah & Lokasi */}
+                <div className="flex flex-col text-left">
+                  <span className="text-base sm:text-lg font-bold text-white tracking-wide leading-tight">
+                    {config.namaSekolah || "MTs Roudhotul Ulum"}
+                  </span>
+                  <span className="text-xs sm:text-sm text-white/80 font-medium mt-0.5">
+                    Seputih Mataram
+                  </span>
+                </div>
               </div>
 
               {/* Headings Utama */}
-              <h1 className="text-3xl sm:text-4xl font-black tracking-tight leading-tight mb-4">
+              <h1 className="text-3xl sm:text-4xl font-black tracking-tight leading-tight mb-4 text-center">
                 Selamat Datang
               </h1>
               {/* Descriptive Text */}
-              <p className="text-white/95 text-xs sm:text-sm leading-relaxed max-w-sm font-medium">
+              <p className="text-white/95 text-xs sm:text-sm leading-relaxed max-w-sm font-medium mx-auto text-center">
                 Sistem SPP & Manajemen Kasir otomatis yang terintegrasi secara real-time antar perangkat dan cloud Google Sheets.
               </p>
             </div>
