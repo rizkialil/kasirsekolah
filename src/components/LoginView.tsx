@@ -54,17 +54,27 @@ export default function LoginView({ onLoginSuccess, config, isDark }: LoginViewP
             <div className="absolute bottom-0 left-0 w-48 h-48 bg-black/5 rounded-full blur-xl -ml-16 -mb-16 pointer-events-none" />
 
             <div className="relative z-10">
-              {/* Person Icon in Circle */}
-              <div className="inline-flex p-3.5 bg-white/10 border border-white/10 rounded-full w-fit mb-8 sm:mb-12 shadow-inner">
-                <User className="size-6 text-white" />
+              {/* Wrapper Icon + Teks (Berjajar ke Samping) */}
+              <div className="flex items-center gap-3.5 mb-8 sm:mb-12">
+                {/* Person Icon in Circle */}
+                <div className="inline-flex p-3.5 bg-white/10 border border-white/10 rounded-full w-fit mb-8 sm:mb-12 shadow-inner">
+                  <User className="size-6 text-white" />
+                </div>
+                
+                {/* Teks Nama Sekolah & Lokasi (Vertikal / Atas-Bawah) */}
+                <div className="flex flex-col">
+                  <span className="text-base sm:text-lg font-bold text-white tracking-wide leading-tight">
+                    {config.namaSekolah || "MTs RU"}
+                  </span>
+                  <span className="text-xs sm:text-sm text-white/80 font-medium mt-0.5">
+                    Seputih Mataram
+                  </span>
+                </div>
               </div>
 
               {/* Headings */}
-              <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight">
-                Selamat Datang di
-              </h2>
-              <h1 className="text-3xl sm:text-4xl font-black text-amber-305 tracking-tight leading-tight mt-1 mb-5 drop-shadow-sm uppercase">
-                {config.namaSekolah || "Toko Berkah"}
+              <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight">
+                Selamat Datang
               </h1>
 
               {/* Descriptive Text */}
