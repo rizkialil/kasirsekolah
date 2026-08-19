@@ -54,19 +54,27 @@ export default function LoginView({ onLoginSuccess, config, isDark }: LoginViewP
             <div className="absolute bottom-0 left-0 w-48 h-48 bg-black/5 rounded-full blur-xl -ml-16 -mb-16 pointer-events-none" />
 
             <div className="relative z-10">
-              {/* Person Icon in Circle */}
-              <div className="inline-flex p-3.5 bg-white/10 border border-white/10 rounded-full w-fit mb-8 sm:mb-12 shadow-inner">
-                <User className="size-6 text-white" />
+              {/* Logo & Nama Sekolah sejajar */}
+              <div className="flex items-center gap-3 mb-8 sm:mb-12">
+                {/* Container Logo/Icon */}
+                <div className="inline-flex p-3 bg-white/10 border border-white/10 rounded-full w-fit shadow-inner shrink-0">
+                  {/* Gambar Logo Sekolah */}
+                  <img
+                    src="/logoweb.png"
+                    alt="Logo Sekolah"
+                    className="size-6 object-contain"
+                  />
+                </div>
+                {/* Teks Nama Sekolah (Ukuran Seimbang) */}
+                <span className="text-sm sm:text-base font-bold text-white tracking-wide uppercase leading-snug">
+                  {config.namaSekolah || "MTS ROUDHOTUL ULUM"}
+                </span>
               </div>
 
-              {/* Headings */}
-              <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight">
-                Selamat Datang di
-              </h2>
-              <h1 className="text-3xl sm:text-4xl font-black text-amber-305 tracking-tight leading-tight mt-1 mb-5 drop-shadow-sm uppercase">
-                {config.namaSekolah || "Toko Berkah"}
+              {/* Headings Utama */}
+              <h1 className="text-3xl sm:text-4xl font-black tracking-tight leading-tight mb-4">
+                Selamat Datang
               </h1>
-
               {/* Descriptive Text */}
               <p className="text-white/95 text-xs sm:text-sm leading-relaxed max-w-sm font-medium">
                 Sistem SPP & Manajemen Kasir otomatis yang terintegrasi secara real-time antar perangkat dan cloud Google Sheets.
