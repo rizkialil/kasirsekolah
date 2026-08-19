@@ -57,7 +57,7 @@ export default function LoginView({ onLoginSuccess, config, isDark }: LoginViewP
               <div className="flex items-center gap-3.5 mb-8 sm:mb-12">
                 {/* Person Icon in Circle */}
                 <div className="inline-flex p-3.5 bg-white/10 border border-white/10 rounded-full w-fit shadow-inner">
-                  <User className="size-6 text-white" />
+                  {config.logoSekolah || "Logo"}
                 </div>
                 <div>
                 <h1 className="text-white font-bold text-base sm:text-lg leading-tight tracking-wide">
