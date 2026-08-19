@@ -1086,7 +1086,7 @@ export default function App() {
               {config.namaSekolah || "Toko Berkah"}
             </p>
             <p className="text-[9px] font-semibold text-slate-400 dark:text-slate-500">v1.0</p>
-            <p className="mt-1">Sistem Kasir Offline-First Terintegrasi Google Sheet.</p>
+            <p className="mt-1">Sistem Kasir Terintegrasi Google Sheet.</p>
           </div>
 
         </aside>
