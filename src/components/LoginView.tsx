@@ -56,14 +56,16 @@ export default function LoginView({ onLoginSuccess, config, isDark }: LoginViewP
             <div className="relative z-10">
               <div className="flex items-center gap-3.5 mb-8 sm:mb-12">
                 {/* Person Icon in Circle */}
-                <div className="inline-flex p-1.5 bg-white/10 border border-white/10 rounded-full w-fit shadow-inner">
-                  <img
-                    src={setOpenLogo}
-                    alt="Logo"
-                    className="size-12 object-contain"
-                    priority
-                  />
-                </div>
+                {setOpenLogo ? (
+                  <div className="inline-flex p-1.5 bg-white/10 border border-white/10 rounded-full w-fit shadow-inner">
+                    <img
+                      src={setOpenLogo}
+                      alt="Logo"
+                      className="size-12 object-contain"
+                      priority
+                    />
+                  </div>
+                )}
                 <div>
                 <h1 className="text-white font-bold text-base sm:text-lg leading-tight tracking-wide">
                   {config.namaSekolah || "Toko Berkah"}
