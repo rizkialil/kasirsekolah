@@ -69,7 +69,7 @@ export default function LoginView({ onLoginSuccess, config, isDark }: LoginViewP
                   {config.namaSekolah || "Toko Berkah"}
                 </h1>
                 <p className="text-[#D4AF37] text-xs font-medium tracking-wider">
-                Seputih Mataram
+                  {config.alamatSekolah}
                 </p>
                 </div>
               </div>
