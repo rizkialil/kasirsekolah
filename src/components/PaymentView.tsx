@@ -678,7 +678,7 @@ export default function PaymentView({
                       >
                         {DAFTAR_TAHUN_PELAJARAN.map((tp) => (
                           <option key={tp} value={tp} className="bg-slate-900 text-white">
-                            Th Pelajaran {tp}
+                            Tahun Ajaran {tp}
                           </option>
                         ))}
                       </select>
