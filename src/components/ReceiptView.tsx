@@ -414,7 +414,7 @@ export default function ReceiptView({ transaksi, config, onClose }: ReceiptViewP
                 <p className="text-xs font-semibold text-white border-t border-white/10 pt-1">
                   {transaksi.penerima}
                 </p>
-                <p className="text-[10px] text-slate-400">Petugas Keuangan</p>
+                <p className="text-[10px] text-slate-400">Bendahara</p>
               </div>
             </div>
 
@@ -575,14 +575,14 @@ export default function ReceiptView({ transaksi, config, onClose }: ReceiptViewP
             </div>
             <div style={{ textAlign: "center", minWidth: "180px", fontSize: "12px" }}>
               <p style={{ margin: 0 }}>{selectedTempat}, {selectedTanggal.split(" ").slice(0, 3).join(" ")}</p>
-              <p style={{ margin: "5px 0 0 0" }}>Petugas Keuangan,</p>
+              <p style={{ margin: "5px 0 0 0" }}>Penerima,</p>
               <div style={{ height: "60px", display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <span style={{ border: `2px solid ${transaksi.sisaTunggakan && transaksi.sisaTunggakan > 0 ? "#f59e0b" : "#555"}`, color: transaksi.sisaTunggakan && transaksi.sisaTunggakan > 0 ? "#d97706" : "#000", padding: "5px 12px", borderRadius: "4px", fontSize: "11px", fontWeight: "bold", opacity: 0.8, textTransform: "uppercase" }}>
                   {transaksi.sisaTunggakan && transaksi.sisaTunggakan > 0 ? "BELUM LUNAS" : "LUNAS"}
                 </span>
               </div>
               <p style={{ margin: 0, fontWeight: "bold", borderTop: "1px solid #333", paddingTop: "5px" }}>{transaksi.penerima}</p>
-              <p style={{ margin: "2px 0 0 0", fontSize: "10px", color: "#555" }}>Administrasi Sekolah</p>
+              <p style={{ margin: "2px 0 0 0", fontSize: "10px", color: "#555" }}>Bendahara</p>
             </div>
           </div>
 
