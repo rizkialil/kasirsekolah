@@ -44,6 +44,7 @@ import {
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby8kaNYgwlDWF0JLFZVlzzJVAWmh1P9922cTVeYWScrC0soCnzXfwVXPR_nzJppXQVsvw/exec";
 
 export default function App() {
+  const [isLoadingData, setIsLoadingData] = useState(true);
   
   // --- STATE ---
   const [activeTab, setActiveTab] = useState<'dashboard' | 'payment' | 'students' | 'fees' | 'notifications' | 'reports' | 'integration'>('dashboard');
@@ -160,9 +161,6 @@ export default function App() {
       console.log("[Server DB Status] Local DB updated, server backup sync status:", err instanceof Error ? err.message : err);
     }
   };
-
-// Tambahkan state loading sederhana
-const [isLoadingData, setIsLoadingData] = useState(true);
   
   // --- INITIAL DATA LOAD & RE-SYNC (Cloud First) ---
   useEffect(() => {
