@@ -487,7 +487,7 @@ export default function ReceiptView({ transaksi, config, onClose }: ReceiptViewP
               </div>
             </div>
             <div style={{ textAlign: "right" }}>
-              <h4 style={{ margin: 0, fontSize: "16px", textTransform: "uppercase", letterSpacing: "1px" }}>BUKTI KUITANSI</h4>
+              <h4 style={{ margin: 0, fontSize: "16px", textTransform: "uppercase", letterSpacing: "1px", fontWeight: 800 }}>KUITANSI PEMBAYARAN</h4>
               <p style={{ margin: "5px 0 0 0", fontSize: "12px", fontFamily: "monospace" }}>No: {transaksi.id}</p>
               <p style={{ margin: "3px 0 0 0", fontSize: "11px" }}>Tanggal: {selectedTanggal}</p>
             </div>
