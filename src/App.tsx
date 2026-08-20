@@ -50,8 +50,8 @@ export default function App() {
   const [notificationLogs, setNotificationLogs] = useState<NotifikasiLog[]>([]);
   const [config, setConfig] = useState<AppConfig>({
     sheetUrl: "",
-    namaSekolah: "SMA Nusantara Mandiri",
-    alamatSekolah: "Jl. Diponegoro No. 45, Coblong, Kota Bandung, Jawa Barat",
+    namaSekolah: "MTs Roudhotul Ulum",
+    alamatSekolah: "Seputih Mataram",
     teleponSekolah: "(022) 250-1234",
     penerimaDefault: "Alya Safitri (Bendahara)",
     namaBank: "Bank Syariah Indonesia (BSI)",
