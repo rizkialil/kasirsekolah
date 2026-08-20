@@ -40,11 +40,7 @@ import {
   Moon
 } from "lucide-react";
 
-// 1. Isikan URL Web App Google Apps Script kamu di sini
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby8kaNYgwlDWF0JLFZVlzzJVAWmh1P9922cTVeYWScrC0soCnzXfwVXPR_nzJppXQVsvw/exec";
-
 export default function App() {
-  const [isLoadingData, setIsLoadingData] = useState(true);
   
   // --- STATE ---
   const [activeTab, setActiveTab] = useState<'dashboard' | 'payment' | 'students' | 'fees' | 'notifications' | 'reports' | 'integration'>('dashboard');
@@ -161,65 +157,74 @@ export default function App() {
       console.log("[Server DB Status] Local DB updated, server backup sync status:", err instanceof Error ? err.message : err);
     }
   };
-  
-  // --- INITIAL DATA LOAD & RE-SYNC (Cloud First) ---
+
+  // --- INITIAL DATA LOAD & RE-SYNC ---
   useEffect(() => {
-    const loadInitialDataFromCloud = async () => {
+    // 1. Get cached config
+    const cachedConfig = localStorage.getItem("KAS_SEKOLAH_CONFIG");
+    let currentConfig = config;
+    if (cachedConfig) {
       try {
-        setBackgroundSyncActive(true);
-        setBackgroundSyncStatus("Mengambil data terbaru dari Google Sheet...");
+        const parsed = JSON.parse(cachedConfig);
+        setConfig(parsed);
+        currentConfig = parsed;
+      } catch (e) {}
+    }
 
-        // 1. Fetch data dari Google Script
-        const res = await fetch(`${GOOGLE_SCRIPT_URL}?t=${new Date().getTime()}`);
-        const result = await res.json();
-
-        if (result && result.success !== false) {
-          // Update State Config jika ada di Sheet
-          if (result.config) setConfig(result.config);
-
-          // Update State Siswa dari Sheet
-          if (result.siswa && Array.isArray(result.siswa)) {
-            const normalizedSiswa = result.siswa.map((s: any) => ({
-              ...s,
-              teleponOrangTua: normalizePhoneNumber(s.teleponOrangTua)
-            }));
-            setSiswaList(normalizedSiswa);
-          } else {
-            setSiswaList(SEED_SISWA.map(s => ({ ...s, teleponOrangTua: normalizePhoneNumber(s.teleponOrangTua) })));
-          }
-
-          // Update Transaksi dari Sheet
-          if (result.transaksi && Array.isArray(result.transaksi)) {
-            setTransaksiList(result.transaksi);
-          } else {
-            setTransaksiList(SEED_TRANSAKSI);
-          }
-
-          // Update Biaya dari Sheet
-          if (result.biaya && Array.isArray(result.biaya)) {
-            setBiayaList(result.biaya);
-          }
-
-          // Update Logs dari Sheet
-          if (result.logs && Array.isArray(result.logs)) {
-            setNotificationLogs(result.logs);
-          }
-
-          setConnectionStatus('connected');
-          setBackgroundSyncStatus("Data berhasil disinkronkan!");
+    // 2. Get cached students or fall back
+    const cachedSiswa = localStorage.getItem("KAS_SEKOLAH_SISWA");
+    let initialSiswa = SEED_SISWA.map(s => ({
+      ...s,
+      teleponOrangTua: normalizePhoneNumber(s.teleponOrangTua)
+    }));
+    if (cachedSiswa) {
+      try {
+        const parsed = JSON.parse(cachedSiswa);
+        if (Array.isArray(parsed)) {
+          initialSiswa = parsed.map(s => ({
+            ...s,
+            teleponOrangTua: normalizePhoneNumber(s.teleponOrangTua)
+          }));
         }
-      } catch (err) {
-        console.error("Gagal sinkronisasi data awal:", err);
-        setConnectionStatus('disconnected');
-        setBackgroundSyncStatus("Mode Offline / Gagal terhubung ke Cloud");
-      } finally {
-        setTimeout(() => setBackgroundSyncActive(false), 3000);
-      }
-    };
+      } catch (e) {}
+    }
+    setSiswaList(initialSiswa);
 
-    loadInitialDataFromCloud();
-  }, []);
-  
+    // 3. Get cached transactions or fall back
+    const cachedTrx = localStorage.getItem("KAS_SEKOLAH_TRANSAKSI");
+    let initialTrx = SEED_TRANSAKSI;
+    if (cachedTrx) {
+      try {
+        initialTrx = JSON.parse(cachedTrx);
+      } catch (e) {}
+    }
+    setTransaksiList(initialTrx);
+
+    // 4. Get cached defined fees or fall back
+    const cachedBiaya = localStorage.getItem("KAS_SEKOLAH_BIAYA");
+    let initialBiaya: BiayaSekolah[] = [
+      { id: "biaya-1", nama: "Iuran SPP Bulanan SMA Kelas X", kategori: "SPP", jumlah: 350000, tenggatWaktu: "2026-06-10" },
+      { id: "biaya-2", nama: "Sumbangan Sarana Prasana (Uang Gedung)", kategori: "Uang Gedung", jumlah: 1500000, tenggatWaktu: "2026-06-30" },
+      { id: "biaya-3", nama: "Pengadaan Seragam Olahraga & Almamater", kategori: "Seragam", jumlah: 650000, tenggatWaktu: "2026-06-15" },
+      { id: "biaya-4", nama: "Iuran Kegiatan Study Tour Mandiri", kategori: "Kegiatan", jumlah: 200000, tenggatWaktu: "2026-06-25" }
+    ];
+    if (cachedBiaya) {
+      try {
+        initialBiaya = JSON.parse(cachedBiaya);
+      } catch (e) {}
+    }
+    setBiayaList(initialBiaya);
+
+    // 5. Get cached notification logs or fall back
+    const cachedLogs = localStorage.getItem("KAS_SEKOLAH_LOGS");
+    let initialLogs: NotifikasiLog[] = [];
+    if (cachedLogs) {
+      try {
+        initialLogs = JSON.parse(cachedLogs);
+      } catch (e) {}
+    }
+    setNotificationLogs(initialLogs);
+
     // 6. Async load backend server settings and background sync from Google Sheet url
     const loadAndSyncBackground = async () => {
       let activeSheetUrl = currentConfig.sheetUrl;
@@ -333,7 +338,7 @@ export default function App() {
     loadAndSyncBackground();
   }, []);
 
-// Sync state ke Server/Google Sheet langsung
+  // Sync variables to localStorage when changed locally
   const saveLocalDatabaseState = (
     newSiswa: Siswa[],
     newTransaksi: Transaksi[],
@@ -346,19 +351,24 @@ export default function App() {
     }));
     setSiswaList(normalizedSiswa);
     setTransaksiList(newTransaksi);
-    if (newBiaya) setBiayaList(newBiaya);
-    if (newLogs) setNotificationLogs(newLogs);
-
-    // Kirim sinkronisasi ke Cloud Google Sheet
-    if (GOOGLE_SCRIPT_URL) {
-      executeSheetsRequest(GOOGLE_SCRIPT_URL, "post", {
-        action: "sync_all",
-        siswa: normalizedSiswa,
-        transaksi: newTransaksi,
-        biaya: newBiaya || biayaList,
-        logs: newLogs || notificationLogs
-      }).catch(e => console.log("Gagal sync ke Cloud:", e));
+    localStorage.setItem("KAS_SEKOLAH_SISWA", JSON.stringify(normalizedSiswa));
+    localStorage.setItem("KAS_SEKOLAH_TRANSAKSI", JSON.stringify(newTransaksi));
+    
+    if (newBiaya) {
+      setBiayaList(newBiaya);
+      localStorage.setItem("KAS_SEKOLAH_BIAYA", JSON.stringify(newBiaya));
     }
+    if (newLogs) {
+      setNotificationLogs(newLogs);
+      localStorage.setItem("KAS_SEKOLAH_LOGS", JSON.stringify(newLogs));
+    }
+
+    saveGlobalDatabaseOnServer(
+      normalizedSiswa,
+      newTransaksi,
+      newBiaya !== undefined ? newBiaya : biayaList,
+      newLogs !== undefined ? newLogs : notificationLogs
+    );
   };
 
   const saveLocalSiswa = (list: Siswa[]) => {
@@ -367,16 +377,19 @@ export default function App() {
       teleponOrangTua: normalizePhoneNumber(s.teleponOrangTua)
     }));
     setSiswaList(normalizedSiswa);
-    saveLocalDatabaseState(normalizedSiswa, transaksiList);
+    localStorage.setItem("KAS_SEKOLAH_SISWA", JSON.stringify(normalizedSiswa));
+    saveGlobalDatabaseOnServer(normalizedSiswa);
   };
 
   const saveLocalTransaksi = (list: Transaksi[]) => {
     setTransaksiList(list);
-    saveLocalDatabaseState(siswaList, list);
+    localStorage.setItem("KAS_SEKOLAH_TRANSAKSI", JSON.stringify(list));
+    saveGlobalDatabaseOnServer(undefined, list);
   };
 
   const saveLocalConfig = (newConfig: AppConfig) => {
     setConfig(newConfig);
+    localStorage.setItem("KAS_SEKOLAH_CONFIG", JSON.stringify(newConfig));
     saveGlobalSettings(newConfig);
   };
 
@@ -839,15 +852,6 @@ export default function App() {
     "Juli", "Agustus", "September", "Oktober", "November", "Desember"
   ];
   const formattedToday = `${days[today.getDay()]}, ${today.getDate()} ${monthsIndo[today.getMonth()]} ${today.getFullYear()}`;
-
-// Jika data dari Google Sheet masih dalam proses download, tampilkan teks loading
-if (isLoadingData) {
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-blue-600 text-white text-lg font-bold">
-      Sedang mengambil data terbaru dari Google Sheet...
-    </div>
-  );
-}
 
   if (!isLoggedIn) {
     return (
