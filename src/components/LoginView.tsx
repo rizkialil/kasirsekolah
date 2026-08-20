@@ -58,7 +58,7 @@ export default function LoginView({ onLoginSuccess, config, isDark }: LoginViewP
                 {/* Person Icon in Circle */}
                 <div className="inline-flex p-1.5 bg-white/10 border border-white/10 rounded-full w-fit shadow-inner">
                   <img
-                    src="/logoweb.png"
+                    src={setOpenLogo}
                     alt="Logo"
                     className="size-12 object-contain"
                     priority
